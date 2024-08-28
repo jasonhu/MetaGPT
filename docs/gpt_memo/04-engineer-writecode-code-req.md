@@ -1,0 +1,46 @@
+NOTICE
+Role: You are a professional engineer; the main goal is to write google-style, elegant, modular, easy to read and maintain code
+Language: Please use the same language as the user requirement, but the title and code should be still in English. For example, if the user speaks Chinese, the specific text of your answer should also be in Chinese.
+ATTENTION: Use '##' to SPLIT SECTIONS, not '#'. Output format carefully referenced "Format example".
+
+# Context
+## Design
+{"Implementation approach":"To create a concise, usable, and complete software system for a hello world game, we will use the Pygame library for the game engine. Pygame is an open-source library that is simple to use and provides the necessary functionality for creating 2D games. It will allow us to create a visually appealing game that is easy to understand and play. We will also ensure that the game is responsive and can be played on both computers and mobile devices by implementing a responsive design.","File list":["main.py","game.py","renderer.py","input_handler.py"],"Data structures and interfaces":"\nclassDiagram\n    class Game {\n        -renderer: Renderer\n        -input_handler: InputHandler\n        +start()\n        +run()\n        +handle_input(event)\n    }\n    class Renderer {\n        +render_background()\n        +render_elements(elements)\n    }\n    class InputHandler {\n        +handle_keyboard_input(event)\n        +handle_mouse_input(event)\n    }\n    class GameElement {\n        +update()\n        +render()\n    }\n    Game --> Renderer\n    Game --> InputHandler\n    Game --> GameElement\n","Program call flow":"\nsequenceDiagram\n    participant G as Game\n    participant R as Renderer\n    participant IH as InputHandler\n    participant GE as GameElement\n    G->>R: render_background()\n    G->>IH: handle_input(event)\n    G->>GE: update()\n    G->>GE: render()\n    GE-->>R: render_elements(elements)\n","Anything UNCLEAR":"The original requirement does not specify the types of creative 'Hello, World!' implementations or the desired visual style of the game. Further clarification would be helpful in designing the game elements and overall aesthetics."}
+
+## Task
+{"Required packages":["pygame==2.1.2"],"Required Other language third-party packages":["No third-party dependencies required"],"Logic Analysis":[["main.py","Contains the entry point of the application, initializes the Game class, and starts the game loop."],["game.py","Houses the Game class which controls the overall game logic, including starting, running, and handling input."],["renderer.py","Manages rendering of the game's background and elements."],["input_handler.py","Handles keyboard and mouse inputs for the game."]],"Task list":["main.py","game.py","renderer.py","input_handler.py"],"Full API spec":"<none>","Shared Knowledge":"`game.py` will utilize instances of Renderer and InputHandler classes, and each GameElement will be updated and rendered within the Game class.","Anything UNCLEAR":"The specific visual style and creative elements of the 'Hello, World!' game are not detailed in the user requirement. Clarification on these aspects would be beneficial for accurate task breakdown and dependency analysis."}
+
+## Legacy Code
+```Code
+
+```
+
+## Debug logs
+```text
+
+
+
+```
+
+## Bug Feedback logs
+```text
+
+```
+
+# Format example
+## Code: main.py
+```python
+## main.py
+...
+```
+
+# Instruction: Based on the context, follow "Format example", write code.
+
+## Code: main.py. Write code with triple quoto, based on the following attentions and context.
+1. Only One file: do your best to implement THIS ONLY ONE FILE.
+2. COMPLETE CODE: Your code will be part of the entire project, so please implement complete, reliable, reusable code snippets.
+3. Set default value: If there is any setting, ALWAYS SET A DEFAULT VALUE, ALWAYS USE STRONG TYPE AND EXPLICIT VARIABLE. AVOID circular import.
+4. Follow design: YOU MUST FOLLOW "Data structures and interfaces". DONT CHANGE ANY DESIGN. Do not use public member functions that do not exist in your design.
+5. CAREFULLY CHECK THAT YOU DONT MISS ANY NECESSARY CLASS/FUNCTION IN THIS FILE.
+6. Before using a external variable/module, make sure you import it first.
+7. Write out EVERY CODE DETAIL, DON'T LEAVE TODO.

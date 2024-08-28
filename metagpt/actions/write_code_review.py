@@ -134,6 +134,7 @@ class WriteCodeReview(Action):
     @retry(wait=wait_random_exponential(min=1, max=60), stop=stop_after_attempt(6))
     async def write_code_review_and_rewrite(self, context_prompt, cr_prompt, filename):
         cr_rsp = await self._aask(context_prompt + cr_prompt)
+        logger.debug(f"write code review llm raw output:\n{cr_rsp}")
         result = CodeParser.parse_block("Code Review Result", cr_rsp)
         if "LGTM" in result:
             return result, None
@@ -141,6 +142,7 @@ class WriteCodeReview(Action):
         # if LBTM, rewrite code
         rewrite_prompt = f"{context_prompt}\n{cr_rsp}\n{REWRITE_CODE_TEMPLATE.format(filename=filename)}"
         code_rsp = await self._aask(rewrite_prompt)
+        logger.debug(f"write code review LBTP rewrite code, llm raw output:\n{code_rsp}")
         code = CodeParser.parse_code(block="", text=code_rsp)
         return result, code
 

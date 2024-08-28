@@ -87,12 +87,15 @@ class WriteCode(Action):
     @retry(wait=wait_random_exponential(min=1, max=60), stop=stop_after_attempt(6))
     async def write_code(self, prompt) -> str:
         code_rsp = await self._aask(prompt)
+        logger.debug(f"write code llm raw output:\n{code_rsp}")
         code = CodeParser.parse_code(block="", text=code_rsp)
         return code
 
     async def run(self, *args, **kwargs) -> CodingContext:
         bug_feedback = await self.repo.docs.get(filename=BUGFIX_FILENAME)
         coding_context = CodingContext.loads(self.i_context.content)
+        if coding_context is None:
+            raise ValueError("Coding context is None")
         test_doc = await self.repo.test_outputs.get(filename="test_" + coding_context.filename + ".json")
         requirement_doc = await self.repo.docs.get(filename=REQUIREMENT_FILENAME)
         summary_doc = None
@@ -101,7 +104,7 @@ class WriteCode(Action):
         logs = ""
         if test_doc:
             test_detail = RunCodeResult.loads(test_doc.content)
-            logs = test_detail.stderr
+            logs = test_detail.stderr # type: ignore
 
         if bug_feedback:
             code_context = coding_context.code_doc.content

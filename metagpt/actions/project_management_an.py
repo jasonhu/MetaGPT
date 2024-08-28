@@ -51,7 +51,7 @@ REFINED_LOGIC_ANALYSIS = ActionNode(
 TASK_LIST = ActionNode(
     key="Task list",
     expected_type=List[str],
-    instruction="Break down the tasks into a list of filenames, prioritized by dependency order.",
+    instruction="Break down the tasks into a list of filenames only, order by the name, DO NOT comment it.",
     example=["game.py", "main.py"],
 )
 
@@ -68,7 +68,7 @@ FULL_API_SPEC = ActionNode(
     key="Full API spec",
     expected_type=str,
     instruction="Describe all APIs using OpenAPI 3.0 spec that may be used by both frontend and backend. If front-end "
-    "and back-end communication is not required, leave it blank.",
+    "and back-end communication is not required, write <none>.",
     example="openapi: 3.0.0 ...",
 )
 

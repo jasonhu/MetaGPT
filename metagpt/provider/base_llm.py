@@ -148,7 +148,7 @@ class BaseLLM(ABC):
             message.extend(msg)
         if stream is None:
             stream = self.config.stream
-        logger.debug(message)
+        logger.debug(json.dumps(message, indent=2))
         rsp = await self.acompletion_text(message, stream=stream, timeout=self.get_timeout(timeout))
         return rsp
 
